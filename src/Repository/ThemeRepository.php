@@ -16,28 +16,27 @@ class ThemeRepository extends ServiceEntityRepository
         parent::__construct($registry, Theme::class);
     }
 
-    //    /**
-    //     * @return Theme[] Returns an array of Theme objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Theme[] Returns an array of Theme objects
+        */
+        public function findByNom(string $value): array
+        {
+            return $this->createQueryBuilder('t')
+                ->andWhere('t.nom = :val') // Remplacez "exampleField" par "nom"
+                ->setParameter('val', $value)
+                ->orderBy('t.id', 'ASC') // Ordonné par identifiant
+                ->setMaxResults(10) // Limite à 10 résultats
+                ->getQuery()
+                ->getResult();
+        }
 
-    //    public function findOneBySomeField($value): ?Theme
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+       public function findOneBySomeField($value): ?Theme
+       {
+           return $this->createQueryBuilder('t')
+               ->andWhere('t.exampleField = :val')
+               ->setParameter('val', $value)
+               ->getQuery()
+               ->getOneOrNullResult()
+           ;
+       }
 }

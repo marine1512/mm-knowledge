@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\CursusRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CursusRepository::class)]
 class Cursus
@@ -19,9 +21,17 @@ class Cursus
     #[ORM\Column]
     private ?float $prix = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Theme::class, inversedBy: 'cursus')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Theme $theme = null;
+
+    #[ORM\OneToMany(mappedBy: 'cursus', targetEntity: Lecon::class, cascade: ['persist', 'remove'])]
+    private Collection $lecons;
+
+    public function __construct()
+    {
+        $this->lecons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,6 +77,33 @@ class Cursus
     public function setTheme(?Theme $theme): static
     {
         $this->theme = $theme;
+
+        return $this;
+    }
+
+    public function getLecons(): Collection
+    {
+        return $this->lecons;
+    }
+
+    public function addLecon(Lecon $lecon): static
+    {
+        if (!$this->lecons->contains($lecon)) {
+            $this->lecons->add($lecon);
+            $lecon->setCursus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLecon(Lecon $lecon): static
+    {
+        if ($this->lecons->removeElement($lecon)) {
+            // Set the owning side to null (unless already changed)
+            if ($lecon->getCursus() === $this) {
+                $lecon->setCursus(null);
+            }
+        }
 
         return $this;
     }

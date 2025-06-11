@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}KNOWLEDGE{% endblock %}
 
 {% block stylesheets %}
 {{ parent() }}
@@ -10,4 +10,22 @@
 {% block body %}
    <h1>Plateforme e-learning</h1>
    <h2>Etudiez de chez vous et en toute autonomie.</h2>
+<br>
+   <h3>Thèmes disponibles :</h3>
+
+
+    {% for theme in themeProducts %}   
+    <a href='{{ path('product_detail', { id: theme.id }) }}'>
+    <section class="products-section">
+    <div class="product-card">
+        {% if theme.image %}
+        <img src="{{ asset(theme.image) }}" alt="Image de {{ theme.nom }}" class="product-image"/>
+        {% endif %}
+        <div class="product-details">
+            <h2>{{ theme.nom }}</h2>
+        </div>
+    </div>
+    </a>
+    {% endfor %}
+</section>
 {% endblock %}

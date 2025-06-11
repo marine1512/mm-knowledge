@@ -3,30 +3,27 @@
 <head>
     <title>{% block title %}KNOWLEDGE{% endblock %}</title>
     {% block stylesheets %}
-   <link rel="stylesheet" href="{{ asset('css/style.css') }}?v=1.0">
+   <link rel="stylesheet" href="{{ asset('css/header-footer.css') }}?v=1.0">
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('images/Favicon.png') }}">
 </head>
     <nav>
-    <a href=""><img src="{{ asset('images/Logo.jpg') }}" alt="Logo du site" class="form-image"></a>
+    <a href="{{ path('home') }}"><img src="{{ asset('images/Logo.jpg') }}" alt="Logo du site" class="form-image"></a>
         <ul>
-            <li><a href="{{ path('home') }}">Accueil</a></li>
-            <!-- Afficher un lien vers "Cours" uniquement si l'utilisateur est connecté -->
+            <li>
+                <a href="{{ path('home') }}">Accueil</a>
+            </li>
             {% if app.user %}
-                <li><a href="">Formations</a></li>
+            <li><a href="">Formations</a></li>
             {% endif %}
-                <li>
+            <li>
                 {% if app.user %}
-                    <!-- Si l'utilisateur est connecté, afficher "Se déconnecter" -->
                     <a href="{{ path('app_logout') }}">Se déconnecter</a>
                 {% else %}
-                    <!-- Sinon afficher "Se connecter" -->
                     <a href="{{ path('app_login') }}">Se connecter</a>
                 {% endif %}
             </li>
         </ul>
-
-
     </nav>
     <main>
        {% block body %}
@@ -36,16 +33,13 @@
     <h3>Knowledge Learning</h3>
             <ul>
             <li><a href="">Accueil</a></li>
-            <!-- Afficher un lien vers "Cours" uniquement si l'utilisateur est connecté -->
             {% if app.user %}
                 <li><a href="">Formations</a></li>
             {% endif %}
                 <li>
                 {% if app.user %}
-                    <!-- Si l'utilisateur est connecté, afficher "Se déconnecter" -->
                     <a href="{{ path('app_logout') }}">Se déconnecter</a>
                 {% else %}
-                    <!-- Sinon afficher "Se connecter" -->
                     <a href="{{ path('app_login') }}">Se connecter</a>
                 {% endif %}
             </li>
