@@ -1,0 +1,98 @@
+body{
+    background-color: rgb(255, 255, 255);
+    font-family: Comic Sans MS, sans-serif;
+    height: 100%;
+}
+
+main{
+    flex: 1;
+    padding-top: 1em;
+    text-align: center;
+}
+
+/* Général pour le conteneur de la section des produits */
+.products-section {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; 
+    margin: 20px;
+    padding: 10px;
+}
+
+/* Chaque carte produit */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    width: 200px; 
+    max-width: 100%; 
+    padding: 15px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.product-card2{
+    display: flex;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 100%;
+    padding: 15px;
+    justify-content: center;
+} 
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px; 
+    margin-bottom: 10px;
+}
+
+.product-details{
+    display: flex;
+    position: relative;
+}
+
+.product-details h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.product-details .name {
+    text-align: start;
+}
+
+.product-details .product-price {
+    font-size: 16px;
+    color: red; 
+    font-weight: bold;
+}
+
+button {
+    position: absolute; 
+    bottom: 10px;
+    right: 0;
+    border: 1px solid #000000;
+    background-color: #ff00006b; 
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    text-align: center;
+}
+button a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+.reset-button {
+    all: unset; 
+    cursor: pointer; 
+}
