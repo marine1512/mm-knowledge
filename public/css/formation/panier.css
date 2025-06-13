@@ -57,7 +57,7 @@ h1 {
 }
 
 .cart-actions button {
-    background-color: #e74c3c;
+    background-color: #007BFF;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -66,9 +66,6 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-.cart-actions button:hover {
-    background-color: #c0392b;
-}
 
 .cart{
     display: flex;
@@ -93,7 +90,7 @@ p{
     cursor: pointer;
     border: 1px solid black;
     padding: 5px;
-    background-color: #ff00006b;
+    background-color: #007bff80;
     border-radius: 4px;
 }
 

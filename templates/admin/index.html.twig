@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}?v=1.0">
+{% endblock %}
+
+{% block title %}Sweatshirt{% endblock %}
+
+{% block body %}
+<nav>
+    <ul>
+        <li><a href="{{ path('app_user_index') }}">Utilisateurs</a></li>
+        <li><a href="{{ path('theme') }}">Thème</a></li>
+    </ul>
+</nav>
+{% endblock %}

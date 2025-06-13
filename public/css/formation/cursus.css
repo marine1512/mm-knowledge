@@ -18,8 +18,8 @@ main{
     margin: 0 auto;
     padding: 20px;
     max-width: 800px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #f1f8fc;
+    border: 3px solid #007BFF;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
@@ -28,7 +28,7 @@ main{
 /* Titre principal */
 .cursus-title {
     font-size: 28px;
-    color: #333;
+    color: black;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -46,7 +46,7 @@ main{
 
 .lecons-title {
     font-size: 22px;
-    color: #555;
+    color: black;
     margin-bottom: 15px;
 }
 
@@ -61,7 +61,7 @@ main{
     margin-bottom: 10px;
     padding: 15px;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #007BFF;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
@@ -101,7 +101,7 @@ main{
     text-align: center;
 }
 
-.back-button-container .btn {
+.back-button-container .btn, .lecon-details .btn {
     padding: 10px 15px;
     font-size: 16px;
     border-radius: 5px;
@@ -113,6 +113,6 @@ main{
     transition: background-color 0.3s ease;
 }
 
-.back-button-container .btn:hover {
+.back-button-container .btn:hover, .lecon-details .btn:hover {
     background-color: #0056b3;
 }

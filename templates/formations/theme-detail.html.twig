@@ -26,8 +26,14 @@
                             <a href="{{ path('cursus_lecon', { id: cursus.id }) }}" class="cursus-link">
                                 <span class="cursus-name">{{ cursus.nom }}</span> - 
                                 <span class="cursus-price">{{ cursus.prix }} €</span>
-                            </a>
-                        </li>
+                            </a>                        
+                            {% if app.user %}
+                                <form method="post" action="{{ path('cart_add_cursus', { id: cursus.id }) }}" class="add-to-cart-form">
+                                    <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                                </form>
+                            {% endif %}
+                        </li>      
+
                     {% endfor %}
                 </ul>
             {% else %}

@@ -20,9 +20,15 @@
                         <li class="lecon-item">
                             <div class="lecon-details">
                                 <strong class="lecon-name">{{ lecon.nom }}</strong>
-                                <span class="lecon-price">{{ lecon.prix }}€</span>
+                                <span class="lecon-price">{{ lecon.prix }}€</span>                        
+                                {% if app.user %}
+                                    <form method="post" action="{{ path('cart_add_lecon', { id: lecon.id }) }}" class="add-to-cart-form">
+                                        <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                                    </form>
+                                {% endif %}
                             </div>
                         </li>
+
                     {% endfor %}
                 </ul>
             {% else %}
