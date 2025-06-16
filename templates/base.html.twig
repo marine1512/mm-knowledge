@@ -8,44 +8,36 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('images/Favicon.png') }}">
 </head>
     <nav>
-    <a href="{{ path('home') }}"><img src="{{ asset('images/Logo.jpg') }}" alt="Logo du site" class="form-image"></a>
-        <ul>
-            <li>
-                <a href="{{ path('home') }}">Accueil</a>
-            </li>
-            <li>
-                {% if app.user %}
-                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                {% else %}
-                    <a href="{{ path('app_login') }}">Se connecter</a>
-                {% endif %}
-            </li>
-        </ul>
-    </nav>
+    <a href="{{ path('home') }}">
+        <img src="{{ asset('images/Logo.jpg') }}" alt="Logo du site" class="form-image">
+    </a>
+    <ul>
+        <li><a href="{{ path('home') }}">Accueil</a></li>
+        {% if app.user %}
+            <li><a href="{{ path('user_lecons') }}">Voir mes leçons</a></li>
+            <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+        {% else %}
+            <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+        {% endif %}
+    </ul>
+</nav>
     <main>
        {% block body %}
         {% endblock %}
     </main>
 <footer class="site-footer">
     <h3>Knowledge Learning</h3>
-            <ul>
-            <li><a href="">Accueil</a></li>
-            {% if app.user %}
-                <li><a href="">Formations</a></li>
-            {% endif %}
-                <li>
-                {% if app.user %}
-                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                {% else %}
-                    <a href="{{ path('app_login') }}">Se connecter</a>
-                {% endif %}
-            </li>
-            <li>    
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('admin') }}">Accès au tableau de bord administrateur</a>
-            {% endif %}   
-            </li>
-        </ul>
-
+    <ul>
+        <li><a href="{{ path('home') }}">Accueil</a></li>
+        {% if app.user %}
+            <li><a href="{{ path('user_lecons') }}">Voir mes leçons</a></li>
+            <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+        {% else %}
+            <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('admin') }}">Accès au tableau de bord administrateur</a></li>
+        {% endif %}
+    </ul>
 </footer>
 </html>

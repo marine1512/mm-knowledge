@@ -27,10 +27,21 @@ class Cursus
 
     #[ORM\OneToMany(mappedBy: 'cursus', targetEntity: Lecon::class, cascade: ['persist', 'remove'])]
     private Collection $lecons;
+        
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'cursus')]
+    private Collection $users;
 
     public function __construct()
     {
         $this->lecons = new ArrayCollection();
+        $this->users = new ArrayCollection();
+    }
+
+
+
+    public function getUsers(): Collection
+    {
+        return $this->users;
     }
 
     public function getId(): ?int

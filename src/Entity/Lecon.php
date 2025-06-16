@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\LeconRepository;
+use App\Entity\User; 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: LeconRepository::class)]
 class Lecon
@@ -19,9 +22,12 @@ class Lecon
     #[ORM\Column]
     private ?float $prix = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Cursus::class, inversedBy: 'lecons')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Cursus $cursus = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'lecons')]
+    private Collection $users;
 
     public function getId(): ?int
     {
@@ -70,4 +76,16 @@ class Lecon
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+
 }

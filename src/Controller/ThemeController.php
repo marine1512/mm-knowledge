@@ -71,7 +71,7 @@ class ThemeController extends AbstractController
     {
         $themes = $entityManager->getRepository(Theme::class)->findAll();
 
-        return $this->render('theme/index.html.twig', [
+        return $this->render('admin/theme/index.html.twig', [
             'themes' => $themes,
         ]);
     }
@@ -92,7 +92,7 @@ class ThemeController extends AbstractController
             return $this->redirectToRoute('theme');
         }
 
-        return $this->render('theme/new.html.twig');
+        return $this->render('admin/theme/new.html.twig');
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
@@ -110,7 +110,7 @@ class ThemeController extends AbstractController
             return $this->redirectToRoute('theme');
         }
 
-        return $this->render('theme/edit.html.twig', [
+        return $this->render('admin/theme/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

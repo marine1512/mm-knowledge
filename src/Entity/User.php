@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Entity\Lecon; 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Entité représentant un utilisateur.
@@ -46,13 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    /**
-     * Adresse de livraison.
-     *
-     * @var string|null
-     */
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $shippingAddress = null;
 
     /**
      * Rôles associés à l'utilisateur (format JSON).
@@ -79,6 +75,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $isActive = false;
+
+    #[ORM\ManyToMany(targetEntity: Lecon::class, inversedBy: 'users')]
+    private Collection $lecons;
+
+    #[ORM\ManyToMany(targetEntity: Cursus::class, inversedBy: 'users')]
+    private Collection $cursus;
+
     /** 
      * Jeton pour la vérification de l'adresse e-mail.
      * 
@@ -86,6 +91,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $emailVerificationToken = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPurchase::class, cascade: ['persist', 'remove'])]
+    private Collection $purchases;
 
     /**
      * Retourne l'ID de l'utilisateur.
@@ -149,29 +157,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Retourne l'adresse de livraison.
-     * 
-     * @return string|null
-     */
-    public function getShippingAddress(): ?string
-    {
-        return $this->shippingAddress;
-    }
-
-    /**
-     * Définit l'adresse de livraison.
-     *
-     * @param string|null $shippingAddress
-     * @return self
-     */
-    public function setShippingAddress(?string $shippingAddress): self
-    {
-        $this->shippingAddress = $shippingAddress;
 
         return $this;
     }
@@ -276,6 +261,97 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmailVerificationToken(?string $emailVerificationToken): self
     {
         $this->emailVerificationToken = $emailVerificationToken;
+
+        return $this;
+    }
+
+        public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function __construct()
+    {
+        $this->lecons = new ArrayCollection();
+        $this->cursus = new ArrayCollection(); // Ajout
+        $this->purchases = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection<int, Lecon>
+     */
+    public function getLecons(): Collection
+    {
+        return $this->lecons;
+    }
+
+    public function addLecon(Lecon $lecon): self
+    {
+        if (!$this->lecons->contains($lecon)) {
+            $this->lecons->add($lecon); // Ajout à la collection
+        }
+
+        return $this;
+    }
+
+    public function removeLecon(Lecon $lecon): self
+    {
+        $this->lecons->removeElement($lecon);
+
+        return $this;
+    }
+
+    public function getCursus(): Collection
+    {
+        return $this->cursus;
+    }
+
+    public function addCursus(Cursus $cursus): self
+    {
+        if (!$this->cursus->contains($cursus)) {
+            $this->cursus->add($cursus); // Ajout à la collection
+        }
+
+        return $this;
+    }
+
+    public function removeCursus(Cursus $cursus): self
+    {
+        $this->cursus->removeElement($cursus);
+
+        return $this;
+    }
+
+    public function getPurchases(): Collection
+    {
+        return $this->purchases;
+    }
+
+    public function addPurchase(UserPurchase $purchase): self
+    {
+        if (!$this->purchases->contains($purchase)) {
+            $this->purchases->add($purchase);
+            $purchase->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchase(UserPurchase $purchase): self
+    {
+        if ($this->purchases->removeElement($purchase)) {
+            // Set the owning side to null (unless already changed)
+            if ($purchase->getUser() === $this) {
+                $purchase->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -5,13 +5,16 @@
     <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}?v=1.0">
 {% endblock %}
 
-{% block title %}Sweatshirt{% endblock %}
+{% block title %}Tableau de bord administrateur{% endblock %}
 
 {% block body %}
-<nav>
+<h1>Tableau de bord administrateur</h1>
+<div class='admin'>
     <ul>
-        <li><a href="{{ path('app_user_index') }}">Utilisateurs</a></li>
-        <li><a href="{{ path('theme') }}">Thème</a></li>
+        <li><a href="{{ path('app_user_index') }}">Gérer les utilisateurs</a></li>
+        <li><a href="{{ path('theme') }}">Gérer les thèmes</a></li>
+        <li><a href="{{ path('cursus_index') }}">Gérer les cursus</a></li>
+        <li><a href="{{ path('lecon_index') }}">Gérer les leçons</a></li>
     </ul>
-</nav>
+</div>
 {% endblock %}

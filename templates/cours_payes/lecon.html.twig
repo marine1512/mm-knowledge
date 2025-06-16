@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+   <link rel="stylesheet" href="{{ asset('css/formation/cursus.css') }}?v=1.0">
+{% endblock %}
+
+
+{% block body %}
+<h1>Ma liste de leçons</h1>
+
+    {% if lecons is empty %}
+        <p>Vous n’avez encore acheté aucune leçon.</p>
+    {% else %}
+        <ul>
+                <li>
+{% if lecon is defined and lecon.nom is defined %}
+    {{ lecon.nom }}
+{% else %}
+    <p>Le contenu de la leçon est indisponible.</p>
+{% endif %}
+                </li>
+        </ul>
+    {% endif %}
+{% endblock %}

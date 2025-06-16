@@ -27,7 +27,7 @@
                                 <span class="cursus-name">{{ cursus.nom }}</span> - 
                                 <span class="cursus-price">{{ cursus.prix }} €</span>
                             </a>                        
-                            {% if app.user %}
+                            {% if app.user and app.user.isActive %}
                                 <form method="post" action="{{ path('cart_add_cursus', { id: cursus.id }) }}" class="add-to-cart-form">
                                     <button type="submit" class="btn btn-primary">Ajouter au panier</button>
                                 </form>

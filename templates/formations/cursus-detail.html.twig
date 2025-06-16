@@ -21,7 +21,7 @@
                             <div class="lecon-details">
                                 <strong class="lecon-name">{{ lecon.nom }}</strong>
                                 <span class="lecon-price">{{ lecon.prix }}€</span>                        
-                                {% if app.user %}
+                                {% if app.user and app.user.isActive %}
                                     <form method="post" action="{{ path('cart_add_lecon', { id: lecon.id }) }}" class="add-to-cart-form">
                                         <button type="submit" class="btn btn-primary">Ajouter au panier</button>
                                     </form>

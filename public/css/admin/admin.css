@@ -12,6 +12,37 @@ main{
 h1 {
     text-align: center;
     text-decoration: underline;
+    margin-bottom: 1em;
+}
+
+.admin ul {
+    list-style: none; 
+    display: flex; 
+    justify-content: center;
+    gap: 1.5em; 
+    padding: 0; 
+    margin: 0; 
+}
+
+.admin ul li {
+    white-space: nowrap;
+    background-color: #f1f8fc;
+    border: 1px solid #0074c7;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admin ul li:hover {
+    background-color: #0074c7;
+}
+.admin ul li a {
+    text-decoration: none; 
+    color: #00497c ; 
+}
+
+.admin ul li a:hover {
+    color: white;
 }
 
 form {

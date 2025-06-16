@@ -60,7 +60,9 @@ class SecurityControllerAuthenticator extends AbstractLoginFormAuthenticator
 
         if (in_array('ROLE_ADMIN', $roles, true)) {
             return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
-        }
+        }elseif (in_array('ROLE_USER', $roles, true)) {
+        return new RedirectResponse($this->urlGenerator->generate('user_dashboard'));
+}
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 }

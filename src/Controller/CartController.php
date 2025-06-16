@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cursus;
 use App\Entity\Lecon;
+use App\Entity\UserPurchase;
 use App\Service\CartService;
 use App\Service\StripeService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Contrôleur pour la gestion du panier et du processus d'achat
@@ -160,14 +162,63 @@ class CartController extends AbstractController
     }
 
     #[Route('/success', name: 'payment_success')]
-    public function success(CartService $cartService): Response
-    {
-        $cartService->clear();
-        $this->addFlash('success', 'Votre paiement a été effectué avec succès !');
-        return $this->render('panier/success.html.twig', [
-            'message' => 'Merci pour votre achat ! Votre paiement a été effectué avec succès.',
-        ]);
+public function success(CartService $cartService, EntityManagerInterface $entityManager): Response
+{
+    // Vérifier si l'utilisateur est connecté
+    $user = $this->getUser();
+    if (!$user) {
+        $this->addFlash('error', 'Vous devez être connecté pour finaliser votre achat.');
+        return $this->redirectToRoute('cart');
     }
+
+    // Récupérer le panier complet
+    $cart = $cartService->getFullCart();
+
+    // Pour chaque élément du panier, associer à l'utilisateur
+       foreach ($cart as $cartItem) {
+           $item = $cartItem['item']; // L'objet Leçon ou Cursus
+
+           $userPurchase = new UserPurchase();
+           $userPurchase->setUser($user);
+
+           if ($item instanceof Lecon) {
+               $userPurchase->setLecon($item);
+               $user->addLecon($item);
+           }
+
+           if ($item instanceof Cursus) {
+               // Ajoutez une méthode similaire pour associer un Cursus si nécessaire
+           }
+
+           $entityManager->persist($userPurchase);
+       }
+
+       $entityManager->flush();
+
+// Sauvegarder l'utilisateur avec les nouvelles relations
+$entityManager->persist($user);
+$entityManager->flush();
+
+    if (empty($cart)) {
+        $this->addFlash('error', 'Votre panier est vide. Aucun achat n’a été réalisé.');
+        return $this->redirectToRoute('cart');
+    }
+
+    // Sauvegarder les nouvelles relations dans la base de données
+    $entityManager->persist($user);
+    $entityManager->flush();
+
+    // Vider le panier après paiement
+    $cartService->clear();
+
+    // Ajouter un message de succès
+    $this->addFlash('success', 'Votre paiement a été effectué avec succès. Vos accès ont été ajoutés à votre compte.');
+
+    // Afficher une page de confirmation
+    return $this->render('panier/success.html.twig', [
+        'message' => 'Merci pour votre achat ! Vos contenus sont désormais accessibles.',
+    ]);
+}
 
     #[Route('/cancel', name: 'payment_cancel')]
     public function cancel(): Response

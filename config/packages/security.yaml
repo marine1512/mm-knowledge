@@ -36,7 +36,9 @@ security:
         - { path: ^/logout, roles: PUBLIC_ACCESS } 
         - { path: ^/register, roles: PUBLIC_ACCESS } 
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/home, roles: ROLE_USER } 
+        - { path: ^/api/doc, roles: PUBLIC_ACCESS } 
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/home, roles: ROLE_USER, allow_if: "is_granted('IS_AUTHENTICATED_FULLY') and user.isVerified()" }
 
 when@test:
     security:

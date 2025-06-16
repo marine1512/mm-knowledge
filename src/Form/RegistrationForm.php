@@ -17,7 +17,6 @@ class RegistrationForm extends AbstractType
         $builder
             ->add('username')
             ->add('email')
-            ->add('shippingAddress')
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],

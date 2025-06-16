@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationForm;
 use App\Security\EmailVerifier;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -110,32 +113,45 @@ class RegistrationController extends AbstractController
      *
      * @return Response La réponse HTTP avec un message de succès ou une redirection.
      */
-    public function verifyUserEmail(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $token = $request->query->get('token'); // Récupérer le token depuis l'URL
-    
-        if (!$token) {
-            throw $this->createNotFoundException('Token non fourni pour la vérification.');
-        }
-    
-        // Récupérer un utilisateur avec ce token
-        $user = $entityManager->getRepository(User::class)->findOneBy(['emailVerificationToken' => $token]);
-    
-        if (!$user) {
-            throw $this->createNotFoundException('Aucun utilisateur trouvé pour ce token.');
-        }
-    
-        // Marquer l'utilisateur comme vérifié
-        if (!$user->isVerified()) {
-            $user->setIsVerified(true);
-            $user->setEmailVerificationToken(null); // Supprimer le token après utilisation
-            $entityManager->flush(); // Sauvegarder les modifications
-        }
-    
-        $this->addFlash('success', 'Votre email a été confirmé avec succès.');
-    
-        return $this->redirectToRoute('home');
+   public function verifyUserEmail(Request $request, EntityManagerInterface $entityManager, UserAuthenticatorInterface $userAuthenticator, FormLoginAuthenticator $authenticator): Response
+{
+    $token = $request->query->get('token'); // Récupérer le token
+
+    if (!$token) {
+        throw $this->createNotFoundException('Token non fourni pour la vérification.');
     }
+
+    // Trouver l'utilisateur associé au token
+    $user = $entityManager->getRepository(User::class)->findOneBy(['emailVerificationToken' => $token]);
+
+    if (!$user) {
+        throw $this->createNotFoundException('Aucun utilisateur trouvé pour ce token.');
+    }
+
+    // Marquer l'utilisateur comme vérifié
+    if (!$user->isVerified()) {
+        $user->setIsVerified(true);
+        $user->setIsActive(true);
+        $user->setEmailVerificationToken(null); // Supprimer le token
+        $entityManager->flush(); // Sauvegarder les changements
+    }
+
+    // Authentifier automatiquement l'utilisateur
+    try {
+        return $userAuthenticator->authenticateUser(
+            $user,
+            $authenticator,
+            $request
+        );
+    } catch (AuthenticationException $e) {
+        $this->addFlash('error', 'Une erreur est survenue lors de l\'authentification automatique.');
+        return $this->redirectToRoute('app_login'); // Rediriger vers la page de login en cas d'erreur
+    }
+
+    // Confirmation
+    $this->addFlash('success', 'Votre email a été confirmé avec succès et vous êtes maintenant connecté.');
+    return $this->redirectToRoute('home'); // Redirection après connexion
+}
 
     #[Route('/register/confirmation', name: 'app_register_confirmation')]
     /**
