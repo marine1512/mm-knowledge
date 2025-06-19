@@ -9,11 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Contrôleur pour gérer la boutique en ligne.
- *
- * Ce contrôleur gère la liste des produits et les détails d'un produit individuel.
- */
 #[Route('/cursus')]
 class CursusController extends AbstractController
 {

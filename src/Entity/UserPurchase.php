@@ -18,6 +18,12 @@ class UserPurchase
     #[ORM\ManyToOne(targetEntity: Lecon::class)] // Vérifiez le nom correct ici
     private ?Lecon $lecon = null; // Ou la classe Leçon si le nom est différent
 
+    #[ORM\ManyToOne(targetEntity: Cursus::class)]
+    private ?Cursus $cursus = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isValidated = false; 
+
     // Getters et Setters
     public function getId(): ?int
     {
@@ -44,6 +50,29 @@ class UserPurchase
     public function setLecon(?Lecon $lecon): self
     {
         $this->lecon = $lecon;
+
+        return $this;
+    }
+
+    public function getCursus(): ?Cursus
+{
+    return $this->cursus;
+}
+
+public function setCursus(?Cursus $cursus): self
+{
+    $this->cursus = $cursus;
+    return $this;
+}
+
+public function isValidated(): bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }

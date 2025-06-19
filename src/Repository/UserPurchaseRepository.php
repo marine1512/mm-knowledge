@@ -40,4 +40,26 @@ public function getPurchasedLecons($user)
         ->getQuery()
         ->getResult();
 }
+public function getPurchasedCursus($user)
+{
+    return $this->createQueryBuilder('purchase')
+        ->join('purchase.cursus', 'cursus') // Joindre la relation "cursus"
+        ->where('purchase.user = :user') // Condition sur l'utilisateur
+        ->setParameter('user', $user)
+        ->select('cursus') // Sélectionner uniquement les cursus
+        ->addSelect('purchase') // Inclure explicitement la racine "purchase" pour DQL
+        ->getQuery()
+        ->getResult();
+}
+public function getPurchasedTheme(User $user): array
+       {
+           $queryBuilder = $this->createQueryBuilder('purchase')
+               ->leftJoin('purchase.theme', 'theme') // Jointure avec l'entité liée (par exemple Theme)
+               ->andWhere('purchase.user = :user')
+               ->setParameter('user', $user)
+               ->select('theme')
+               ->getQuery();
+
+           return $queryBuilder->getResult();
+       }
 }

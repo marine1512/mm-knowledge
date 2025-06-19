@@ -1,12 +1,15 @@
 body{
     background-color: rgb(255, 255, 255);
-    font-family: Arial, sans-serif;
+    font-family: Comic Sans MS, sans-serif;
     height: 100%;
 }
 
 main{
     flex: 1;
+    display: flex;
     padding: 1em;
+    flex-direction: column;
+    justify-content: center;
 }
 
 h1 {
@@ -15,13 +18,22 @@ h1 {
     margin-bottom: 1em;
 }
 
+.admin {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+}
+
 .admin ul {
-    list-style: none; 
-    display: flex; 
+    list-style: none;
+    display: flex;
     justify-content: center;
-    gap: 1.5em; 
-    padding: 0; 
-    margin: 0; 
+    gap: 1.5em;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
 }
 
 .admin ul li {
@@ -45,16 +57,15 @@ h1 {
     color: white;
 }
 
-form {
-    margin: 20px;
-}
-
-
 .table{
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
+        background-color: #ffffff;
+    border: 3px solid #0074c7;
+    border-radius: 5px;
 }
+
 .table th, .table td {
     border: 1px solid black;
     padding: 8px;
@@ -63,6 +74,7 @@ form {
 
 .btn {
     all: unset;
+    width: fit-content;
     cursor: pointer;
     border: 1px solid black;
     padding: 5px;
@@ -73,6 +85,7 @@ form {
 }
 
 .btn a {
+
     text-decoration: none;
     color: black;
 }

@@ -14,7 +14,8 @@
     <ul>
         <li><a href="{{ path('home') }}">Accueil</a></li>
         {% if app.user %}
-            <li><a href="{{ path('user_lecons') }}">Voir mes leçons</a></li>
+            <li><a href="{{ path('user_achat') }}">Mes achats</a></li>
+            <li><a href="{{ path('certification') }}">Mes certifications</a></li>
             <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
         {% else %}
             <li><a href="{{ path('app_login') }}">Se connecter</a></li>
@@ -30,13 +31,15 @@
     <ul>
         <li><a href="{{ path('home') }}">Accueil</a></li>
         {% if app.user %}
-            <li><a href="{{ path('user_lecons') }}">Voir mes leçons</a></li>
+            <li><a href="{{ path('user_achat') }}">Mes achats</a></li>
+            <li><a href="{{ path('certification') }}">Mes certifications</a></li>
             <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
         {% else %}
             <li><a href="{{ path('app_login') }}">Se connecter</a></li>
         {% endif %}
+        </ul>
         {% if is_granted('ROLE_ADMIN') %}
-            <li><a href="{{ path('admin') }}">Accès au tableau de bord administrateur</a></li>
+            <p class="blue"><a href="{{ path('admin') }}">Accès au tableau de bord administrateur</a></p>
         {% endif %}
     </ul>
 </footer>

@@ -36,7 +36,6 @@ class AppFixtures extends Fixture
         );
         $manager->persist($client);
 
-        // Flusher les entités dans la base
         $manager->flush();
     }
 }

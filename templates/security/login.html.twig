@@ -14,7 +14,7 @@
 {% endif %}
 
 <form method="post" action="{{ path('app_login_check') }}">
-    <p>Se connecter</p>
+    <h1>Se connecter</h1>
     <div class="login">
         <label>Nom d'utilisateur : </label>
         <input type="text" name="username">
@@ -23,7 +23,7 @@
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         <button type="submit">Se connecter</button>
         <br>
-        <a>Mot de passe oublié</a>
+        <p>Mot de passe oublié</p>
     </div>
     <p>Pas encore inscrit ?</p> 
     <a href="{{ path('app_register') }}" class="btn-secondary">Créer un compte</a>

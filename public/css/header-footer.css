@@ -1,12 +1,25 @@
 *{
     margin: 0;
     padding: 0;
-}
-html, body {
     font-family: Comic Sans MS, sans-serif;
-    margin: 0;    
+}
+
+html, body {
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+    box-sizing: border-box; 
+}
+
+body {
+    background-image: url('../images/fond.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    font-family: Comic Sans MS, sans-serif;
     display: flex;
     flex-direction: column; 
+    min-height: 100vh;
+    margin: 0; 
 }
 
 
@@ -55,6 +68,9 @@ nav ul li a:focus {
 
 /* Footer */
 .site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     text-align: center;
     background-color: #f1f8fc;
     padding: 20px; 
@@ -79,14 +95,11 @@ nav ul li a:focus {
     text-transform: uppercase; 
 }
 
-.site-footer .slogan {
-    font-style: italic; 
-    color: #0074c7; 
-}
-
 .site-footer a , .site-footer ul{
     color: #000000; 
     list-style: none;
     text-decoration: none;
+
 }
+
 

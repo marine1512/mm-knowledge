@@ -29,6 +29,9 @@ class Lecon
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'lecons')]
     private Collection $users;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'validatedLecons')]
+    private Collection $validatedByUsers;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -80,11 +83,37 @@ class Lecon
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->validatedByUsers = new ArrayCollection();
     }
 
     public function getUsers(): Collection
     {
         return $this->users;
+    }
+
+    public function getValidatedByUsers(): Collection
+    {
+        return $this->validatedByUsers;
+    }
+
+    public function addValidatedByUser(User $user): self
+    {
+        if (!$this->validatedByUsers->contains($user)) {
+            $this->validatedByUsers[] = $user;
+            $user->addValidatedLecon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeValidatedByUser(User $user): self
+    {
+        if ($this->validatedByUsers->contains($user)) {
+            $this->validatedByUsers->removeElement($user);
+            $user->removeValidatedLecon($this);
+        }
+
+        return $this;
     }
 
 

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-        <h1>{{ lecon.nom }}</h1>
+        <h1>{{ cursus.nom }}</h1>
         <p class="achat-contenu">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
@@ -33,11 +33,5 @@
         omnis dolor repellendus et aut officiis debitis aut rerum necessitatibus saepe eveniet et voluptates repudiandae sint et. 
         molestiae non récusandée. Itaque earum rerum hic tenetur a sapiente delectus, 
         ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-
-        <div class='boutons'>
-                <form action="{{ path('validate_lecon', {'id': lecon.id}) }}" method="post">
-                        <button type="submit" class="btn">Valider</button>
-                </form>
-                <a href="{{ path('user_achat') }}" class='btn'>Retour</a>
-        </div>
+        <a href="{{ path('user_achat') }}" class='btn'>Retour</a>
 {% endblock %}

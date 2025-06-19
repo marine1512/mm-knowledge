@@ -14,19 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * Contrôleur pour la gestion du panier et du processus d'achat
- * avec prise en charge des Leçons et des Cursus.
- */
 class CartController extends AbstractController
 {
     #[Route('/cart', name: 'cart', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        // Récupération du panier en session
         $cart = $request->getSession()->get('cart', []);
 
-        // Calcul du prix total
         $totalPrice = array_reduce($cart, function ($total, $item) {
             return $total + $item['prix'] * $item['quantité'];
         }, 0);
@@ -40,7 +34,6 @@ class CartController extends AbstractController
     #[Route('/cart/add/lecon/{id}', name: 'cart_add_lecon', methods: ['POST'])]
     public function addLeconToCart($id, Request $request, ManagerRegistry $doctrine): Response
     {
-        // Récupérer la Leçon depuis la base de données
         $lecon = $doctrine->getRepository(Lecon::class)->find($id);
 
         if (!$lecon) {
@@ -48,13 +41,11 @@ class CartController extends AbstractController
             return $this->redirectToRoute('lecon_list');
         }
 
-        // Gestion du panier
         $session = $request->getSession();
         $cart = $session->get('cart', []);
 
         $itemKey = 'lecon-' . $id;
 
-        // Ajouter ou mettre à jour la quantité
         if (isset($cart[$itemKey])) {
             $cart[$itemKey]['quantité'] += 1;
         } else {
@@ -75,7 +66,6 @@ class CartController extends AbstractController
     #[Route('/cart/add/cursus/{id}', name: 'cart_add_cursus', methods: ['POST'])]
     public function addCursusToCart($id, Request $request, ManagerRegistry $doctrine): Response
     {
-        // Récupérer le Cursus depuis la base de données
         $cursus = $doctrine->getRepository(Cursus::class)->find($id);
 
         if (!$cursus) {
@@ -83,13 +73,11 @@ class CartController extends AbstractController
             return $this->redirectToRoute('cursus_list');
         }
 
-        // Gestion du panier
         $session = $request->getSession();
         $cart = $session->get('cart', []);
 
         $itemKey = 'cursus-' . $id;
 
-        // Ajouter ou mettre à jour la quantité
         if (isset($cart[$itemKey])) {
             $cart[$itemKey]['quantité'] += 1;
         } else {
@@ -128,7 +116,6 @@ class CartController extends AbstractController
     {
         $cart = $cartService->getFullCart();
 
-        // Si le panier est vide, rediriger l'utilisateur
         if (empty($cart)) {
             $this->addFlash('error', 'Votre panier est vide.');
             return $this->redirectToRoute('cart');
@@ -158,58 +145,55 @@ class CartController extends AbstractController
             $this->generateUrl('payment_cancel', [], false)
         );
 
-        return $this->redirect($session->url, 303); // Redirection vers la page Stripe
+        return $this->redirect($session->url, 303); 
     }
 
-    #[Route('/success', name: 'payment_success')]
+   #[Route('/success', name: 'payment_success')]
 public function success(CartService $cartService, EntityManagerInterface $entityManager): Response
 {
-    // Vérifier si l'utilisateur est connecté
     $user = $this->getUser();
     if (!$user) {
         $this->addFlash('error', 'Vous devez être connecté pour finaliser votre achat.');
         return $this->redirectToRoute('cart');
     }
 
-    // Récupérer le panier complet
     $cart = $cartService->getFullCart();
-
-    // Pour chaque élément du panier, associer à l'utilisateur
-       foreach ($cart as $cartItem) {
-           $item = $cartItem['item']; // L'objet Leçon ou Cursus
-
-           $userPurchase = new UserPurchase();
-           $userPurchase->setUser($user);
-
-           if ($item instanceof Lecon) {
-               $userPurchase->setLecon($item);
-           }
-
-           if ($item instanceof Cursus) {
-               // Ajoutez une méthode similaire pour associer un Cursus si nécessaire
-           }
-
-           $entityManager->persist($userPurchase);
-       }
-
-       $entityManager->flush();
-
-// Sauvegarder l'utilisateur avec les nouvelles relations
-$entityManager->persist($user);
-$entityManager->flush();
 
     if (empty($cart)) {
         $this->addFlash('error', 'Votre panier est vide. Aucun achat n’a été réalisé.');
         return $this->redirectToRoute('cart');
     }
 
-    // Vider le panier après paiement
+    foreach ($cart as $cartItem) {
+        $item = $cartItem['item'];
+
+        if ($item instanceof Lecon) {
+            $userPurchase = new UserPurchase();
+            $userPurchase->setUser($user);
+            $userPurchase->setLecon($item);
+            $entityManager->persist($userPurchase);
+        }
+
+        if ($item instanceof Cursus) {
+            $userPurchase = new UserPurchase();
+            $userPurchase->setUser($user);
+            $userPurchase->setCursus($item);
+            $entityManager->persist($userPurchase);
+
+            foreach ($item->getLecons() as $lecon) {
+                $leconPurchase = new UserPurchase();
+                $leconPurchase->setUser($user);
+                $leconPurchase->setLecon($lecon);
+                $entityManager->persist($leconPurchase);
+            }
+        }
+    }
+
+    $entityManager->flush(); 
     $cartService->clear();
 
-    // Ajouter un message de succès
     $this->addFlash('success', 'Votre paiement a été effectué avec succès. Vos accès ont été ajoutés à votre compte.');
 
-    // Afficher une page de confirmation
     return $this->render('panier/success.html.twig', [
         'message' => 'Merci pour votre achat ! Vos contenus sont désormais accessibles.',
     ]);

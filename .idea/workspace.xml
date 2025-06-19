@@ -4,7 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7aa3e1d9-3644-44b8-bfb0-d6e53554e116" name="Changes" comment="" />
+    <list default="true" id="7aa3e1d9-3644-44b8-bfb0-d6e53554e116" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/cours_payes/lecon_contenu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/body.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/body.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/header-footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/header-footer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AccessController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AccessController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LeconController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LeconController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Cursus.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Cursus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Lecon.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Lecon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Theme.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Theme.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/UserPurchase.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/UserPurchase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/UserPurchaseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserPurchaseRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cours_payes/lecon.html.twig" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

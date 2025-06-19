@@ -31,6 +31,9 @@ class Cursus
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'cursus')]
     private Collection $users;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $isValidated = false;
+
     public function __construct()
     {
         $this->lecons = new ArrayCollection();
@@ -110,11 +113,22 @@ class Cursus
     public function removeLecon(Lecon $lecon): static
     {
         if ($this->lecons->removeElement($lecon)) {
-            // Set the owning side to null (unless already changed)
             if ($lecon->getCursus() === $this) {
                 $lecon->setCursus(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isValidated(): bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }

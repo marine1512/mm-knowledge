@@ -5,48 +5,49 @@ body{
 }
 
 main{
+    display: flex;
     flex: 1;
     padding-top: 1em;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 form{
-    width: 240px; 
+    width: 30%; 
     margin: 0 auto; 
-    padding: 20px;
+    padding: 1em;
     background: #f1f8fc;
-    border: 1px solid #384050 ;
+    border: 3px solid #0074c7 ;
     border-radius: 8px;
 }
 
 form .login {
     display: flex;
+    margin: 1em 0;
     flex-direction: column;
-    border-width: 2px 0 2px 0;
-    border-style: solid; 
-    border-color: #384050 ; 
+    border-bottom: 2px solid #000000;
+    
 }
 
-form .login2{
-    display: flex;
-    flex-direction: column;
-    gap: 3em;
-    border-width: 2px 0 2px 0;
-    border-style: solid; 
-    border-color: #384050 ; 
+form .login input {
+    margin-bottom: 1em;
 }
+
 form .un{
     margin-top: 10px;
 }
 
-form p{
-    margin: 10px 0 10px 0;
-}
 
 input {
     border: 1px solid #384050 ;
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
+    margin-bottom: 1em;
+}
+
+form p {
     margin-bottom: 1em;
 }
 
@@ -57,6 +58,7 @@ button {
     cursor: pointer;
     margin-bottom: 10px;
 }
+
 .btn-secondary {
     background: #0074c7;
     color: rgb(255, 255, 255);
@@ -113,7 +115,6 @@ h1 {
 
 .product-details .product-price {
     font-size: 16px;
-    color: red; 
     font-weight: bold;
     margin: 0;
     text-align: center;

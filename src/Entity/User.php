@@ -84,6 +84,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Cursus::class, inversedBy: 'users')]
     private Collection $cursus;
 
+    #[ORM\ManyToMany(targetEntity: Lecon::class, inversedBy: 'validatedByUsers')]
+    #[ORM\JoinTable(name: 'user_lecon_validations')]
+    private Collection $validatedLecons;
+
     /** 
      * Jeton pour la vérification de l'adresse e-mail.
      * 
@@ -94,6 +98,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPurchase::class, cascade: ['persist', 'remove'])]
     private Collection $purchases;
+
 
     /**
      * Retourne l'ID de l'utilisateur.
@@ -280,8 +285,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->lecons = new ArrayCollection();
-        $this->cursus = new ArrayCollection(); // Ajout
+        $this->cursus = new ArrayCollection();
         $this->purchases = new ArrayCollection();
+        $this->validatedLecons = new ArrayCollection();
     }
 
     /**
@@ -351,6 +357,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($purchase->getUser() === $this) {
                 $purchase->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getValidatedLecons(): Collection
+    {
+        return $this->validatedLecons;
+    }
+
+    public function addValidatedLecon(Lecon $lecon): self
+    {
+        if (!$this->validatedLecons->contains($lecon)) {
+            $this->validatedLecons[] = $lecon;
+            $lecon->addValidatedByUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeValidatedLecon(Lecon $lecon): self
+    {
+        if ($this->validatedLecons->contains($lecon)) {
+            $this->validatedLecons->removeElement($lecon);
+            $lecon->removeValidatedByUser($this);
         }
 
         return $this;

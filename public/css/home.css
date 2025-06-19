@@ -5,9 +5,13 @@ body{
 }
 
 main{
+    display: flex;
     flex: 1;
     padding-top: 1em;
     text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 h3 {
@@ -23,7 +27,8 @@ h3 {
     display: flex;
     flex-wrap: wrap; 
     gap: 20px; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
     margin: 20px;
     padding: 10px;
 }
@@ -73,27 +78,5 @@ h3 {
 
 .product-details .product-price {
     font-size: 16px;
-    color: red; 
     font-weight: bold;
-}
-
-button {
-    position: absolute; 
-    bottom: 10px;
-    right: 0;
-    border: 1px solid #000000;
-    background-color: #ff00006b; 
-    border-radius: 4px;
-    padding: 10px 15px;
-    cursor: pointer;
-    text-align: center;
-}
-button a{
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-}
-
-.reset-button {
-    all: unset; 
-    cursor: pointer; 
 }
