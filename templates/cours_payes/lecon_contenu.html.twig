@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+   <link rel="stylesheet" href="{{ asset('css/formation/cursus.css') }}?v=1.0">
+{% endblock %}
+
+{% block body %}
+    {% for lecon in lecon %}
+        <h1>{{ lecon.lecon.nom }}</h1>
+        <p>Lorem ipsum</p>
+        <a href="{{ path('user_lecons') }}" class='btn'>Retour</a>
+    {% endfor %}
+{% endblock %}

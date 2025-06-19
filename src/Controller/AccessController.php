@@ -30,16 +30,29 @@ public function accessPurchasedLecons(): Response
     }
 
     // Récupérer toutes les leçons achetées par l'utilisateur
-    $lecons = $this->userPurchaseRepository->getPurchasedLecons($user);
+    $lecon = $this->userPurchaseRepository->getPurchasedLecons($user);
 
-    if (empty($lecons)) {
+    if (empty($lecon)) {
         $this->addFlash('info', 'Vous n’avez encore acheté aucune leçon.');
         return $this->redirectToRoute('home'); // Redirection vers l'accueil ou autre page
     }
 
     // Afficher les leçons achetées
     return $this->render('cours_payes/lecon.html.twig', [
-        'lecons' => $lecons,
+        'lecon' => $lecon,
     ]);
 }
+    #[Route('/mes-lecons/{id}', name: 'contenu_lecon', methods: ['GET'])]
+    public function detail(int $id, LeconRepository $leconRepository): Response
+    {
+        $lecon = $leconRepository->find($id);
+
+        if (!$lecon) {
+            throw $this->createNotFoundException('Produit non trouvé');
+        }
+
+        return $this->render('cours_payes/lecon_contenu.html.twig', [
+            'lecon' => $lecon,
+        ]);
+    }
 }

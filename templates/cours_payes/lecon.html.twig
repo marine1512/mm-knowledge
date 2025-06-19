@@ -12,14 +12,15 @@
     {% if lecons is empty %}
         <p>Vous n’avez encore acheté aucune leçon.</p>
     {% else %}
-        <ul>
-                <li>
-{% if lecon is defined and lecon.nom is defined %}
-    {{ lecon.nom }}
-{% else %}
-    <p>Le contenu de la leçon est indisponible.</p>
-{% endif %}
-                </li>
-        </ul>
+<ul>
+    {% for lecon in lecons %}
+        <li>
+            {{ lecon.lecon.nom }}
+        </li>
+        <a href="{{ path('contenu_lecon', { id: lecon.lecon.id }) }}"class='btn'>Voir</a>
+    {% else %}
+        <li>Aucune leçon trouvée.</li>
+    {% endfor %}
+</ul>
     {% endif %}
 {% endblock %}

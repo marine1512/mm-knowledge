@@ -183,7 +183,6 @@ public function success(CartService $cartService, EntityManagerInterface $entity
 
            if ($item instanceof Lecon) {
                $userPurchase->setLecon($item);
-               $user->addLecon($item);
            }
 
            if ($item instanceof Cursus) {
@@ -203,10 +202,6 @@ $entityManager->flush();
         $this->addFlash('error', 'Votre panier est vide. Aucun achat n’a été réalisé.');
         return $this->redirectToRoute('cart');
     }
-
-    // Sauvegarder les nouvelles relations dans la base de données
-    $entityManager->persist($user);
-    $entityManager->flush();
 
     // Vider le panier après paiement
     $cartService->clear();
